@@ -1,25 +1,24 @@
-import Planes.ExperimentalPlane;
+import planes.ExperimentalPlane;
 import models.MilitaryType;
-import Planes.MilitaryPlane;
-import Planes.PassengerPlane;
-import Planes.Plane;
+import planes.MilitaryPlane;
+import planes.PassengerPlane;
+import planes.Plane;
 
 import java.util.*;
 
 public class Airport {
-    private List<? extends Plane> planes;
+    public final List<? extends Plane> planes;
 
 
     public List<PassengerPlane> getPassengerPlane() {
-        List<? extends Plane> l = this.planes;
-
-        List<PassengerPlane> x = new ArrayList<>();
-        for (Plane p : l) {
-            if (p instanceof PassengerPlane) {
-                x.add((PassengerPlane) p);
+        List<? extends Plane> list = this.planes;
+        List<PassengerPlane> passengerPlaneList = new ArrayList<>();
+        for (Plane plane : list) {
+            if (plane instanceof PassengerPlane) {
+                passengerPlaneList.add((PassengerPlane) plane);
             }
         }
-        return x;
+        return passengerPlaneList;
     }
 
     public List<MilitaryPlane> getMilitaryPlanes() {
@@ -27,8 +26,6 @@ public class Airport {
         for (Plane plane : planes) {
             if (plane instanceof MilitaryPlane) {
                 militaryPlanes.add((MilitaryPlane) plane);
-            } else {
-
             }
         }
         return militaryPlanes;
@@ -42,8 +39,6 @@ public class Airport {
                 planeWithMaxCapacity = passengerPlanes.get(i);
             }
         }
-
-
         return planeWithMaxCapacity;
     }
 
@@ -85,7 +80,7 @@ public class Airport {
     public Airport sortByMaxDistance() {
         Collections.sort(planes, new Comparator<Plane>() {
             public int compare(Plane o1, Plane o2) {
-                return o1.Get_Max_Flight_Distance() - o2.Get_Max_Flight_Distance();
+                return o1.getMaxFlightDistance() - o2.getMaxFlightDistance();
             }
         });
         return this;
@@ -94,7 +89,7 @@ public class Airport {
     public Airport sortByMaxSpeed() {
         Collections.sort(planes, new Comparator<Plane>() {
             public int compare(Plane o1, Plane o2) {
-                return o1.getMS() - o2.getMS();
+                return o1.getMaxSpeed() - o2.getMaxSpeed();
             }
         });
         return this;
@@ -103,7 +98,7 @@ public class Airport {
     public Airport sortByMaxLoadCapacity() {
         Collections.sort(planes, new Comparator<Plane>() {
             public int compare(Plane o1, Plane o2) {
-                return o1.getMinLoadCapacity() - o2.getMinLoadCapacity();
+                return o1.getMaxLoadCapacity() - o2.getMaxLoadCapacity();
             }
         });
         return this;
@@ -114,9 +109,7 @@ public class Airport {
     }
 
     private void print(Collection<? extends Plane> collection) {
-        Iterator<? extends Plane> iterator = collection.iterator();
-        while (iterator.hasNext()) {
-            Plane plane = iterator.next();
+        for (Plane plane : collection) {
             System.out.println(plane);
         }
     }
@@ -128,7 +121,6 @@ public class Airport {
                 '}';
     }
 
-    //Constructor
     public Airport(List<? extends Plane> planes) {
         this.planes = planes;
     }
